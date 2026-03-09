@@ -1,20 +1,51 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# 🧱 Trabajo K8S – Trbajo final diplomado
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## 📝 Introducción  
+Este proyecto consiste en el diseño y despliegue de un microservicio utilizando **Docker**, **Kubernetes**, **Helm**, **ArgoCD** y pipelines de **Azure DevOps**.  
+Su propósito es aplicar principios de arquitectura de software moderna, asegurando que las soluciones sean **escalables**, **mantenibles** y alineadas con los requisitos técnicos y del negocio.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+---
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## 🎯 Objetivo  
+Diseñar y desplegar un microservicio contenedorizado en Kubernetes, empleando herramientas de orquestación, empaquetado y automatización.
+
+
+### 📌 Indicadores de desempeño  
+- Diseño de arquitecturas de software utilizando estilos y patrones reconocidos.  
+- Creación de soluciones escalables y mantenibles.  
+- Implementación alineada con requisitos técnicos y del negocio.
+
+---
+
+## 🧩 Alcance de la Actividad  
+El trabajo incluye:
+
+- Construcción de un microservicio básico.  
+- Creación de imágenes Docker.  
+- Despliegue en Kubernetes usando Helm.  
+- Implementación de GitOps mediante ArgoCD.  
+- Automatización de CI/CD con pipelines en Azure DevOps.
+
+---
+
+## 🛠️ Pasos del Proyecto
+
+### 1️⃣ Microservicio y Contenedores Docker  
+- Crear un microservicio básico (**lenguaje libre: Node.js / .NET / Python / etc.**)  
+- Construir el `Dockerfile` correspondiente.  
+- Configurar variables, puertos y dependencias del contenedor.  
+- Publicar la imagen en un registry (Docker Hub / ACR / etc.).
+
+---
+
+### 2️⃣ Despliegue con Helm  
+- Crear un **chart de Helm** para el microservicio.  
+- Configurar:
+  - `values.yaml` por defecto  
+  - Overrides según entorno (dev/test/prod)  
+- Definir plantillas para:
+  - Deployment  
+  - Service  
+  - ConfigMaps / Secrets  
+  - Ingress (si aplica)
