@@ -30,6 +30,7 @@ El trabajo incluye:
 ---
 
 ## Estructura
+```
 DiplomadoEjercicioFinal/
  ├── servicedemo
  ├── src
@@ -40,6 +41,7 @@ DiplomadoEjercicioFinal/
  ├── azure-pipelines.yaml
  ├── docker-compose.yml
  └── dotnet-tools.json
+```
 
 ## Pasos del Proyecto
 
@@ -63,3 +65,4 @@ DiplomadoEjercicioFinal/
   - Ingress (si aplica)
 
  
+
