@@ -1,5 +1,5 @@
 
-# 🧱 Trabajo K8S – Trbajo final diplomado
+# 🧱 Trabajo final diplomado
 
 ##  Introducción  
 Este proyecto consiste en el diseño y despliegue de un microservicio utilizando **Docker**, **Kubernetes**, **Helm**, **ArgoCD** y pipelines de **Azure DevOps**.  
@@ -65,4 +65,5 @@ DiplomadoEjercicioFinal/
   - Ingress (si aplica)
 
  
+
 
