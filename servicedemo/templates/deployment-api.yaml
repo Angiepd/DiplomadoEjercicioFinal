@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.api.name }}
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.api.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.api.name }}
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.api.image.registry }}/{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.api.port }}
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.api.env.aspnetcoreEnvironment | quote }}
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: DB_CONNECTION_STRING
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

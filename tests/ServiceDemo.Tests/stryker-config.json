@@ -1,0 +1,34 @@
+{
+  "stryker-config": {
+    "mutate": [
+      "**/*.cs",
+      "!**/DTOs/Product/*.cs",
+      "!**/Mappings/*.cs",
+      "!**/Common/*.cs",
+      "!**/Interfaces/*.cs",
+      "!**/Migrations/*.cs",
+      "!**/Validators/Product/*.cs"
+    ],
+    "test-projects": [
+      "ServiceDemo.Tests.csproj"
+    ],
+   "ignore-methods": [ 
+      "LogInformation", 
+      "LogWarning", 
+      "LogError", 
+      "LogDebug"
+    ],
+    "thresholds": {
+      "high": 80,
+      "low": 60,
+      "break": 50
+    },
+    "reporters": [
+      "progress",
+      "html"
+    ],
+    "project-info": {
+      "name": "ServiceDemo Mutation Tests"
+    }
+  }
+}

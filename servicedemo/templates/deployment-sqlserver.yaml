@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.sqlserver.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.sqlserver.name }}
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  replicas: {{ .Values.sqlserver.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.sqlserver.name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.sqlserver.name }}
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.sqlserver.securityContext.fsGroup }}
+      containers:
+        - name: sqlserver
+          image: "{{ .Values.sqlserver.image.repository }}:{{ .Values.sqlserver.image.tag }}"
+          imagePullPolicy: {{ .Values.sqlserver.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.sqlserver.port }}
+              protocol: TCP
+          env:
+            - name: ACCEPT_EULA
+              value: {{ .Values.sqlserver.acceptEula | quote }}
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: DB_SA_PASSWORD
+          securityContext:
+            runAsUser: {{ .Values.sqlserver.securityContext.runAsUser }}
+          volumeMounts:
+            - name: sql-data
+              mountPath: {{ .Values.sqlserver.persistence.mountPath }}
+          resources: {{ toYaml .Values.sqlserver.resources | nindent 12 }}
+      volumes:
+        - name: sql-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.sqlserver.persistence.claimName }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

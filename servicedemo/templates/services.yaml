@@ -1,0 +1,59 @@
+# ---- Service ClusterIP — API interna ----
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.api.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.api.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  type: {{ .Values.service.api.type }}
+  selector:
+    app: {{ .Values.api.name }}
+  ports:
+    - name: http
+      port: {{ .Values.service.api.port }}
+      targetPort: {{ .Values.service.api.targetPort }}
+      protocol: TCP
+---
+# ---- Service LoadBalancer — Acceso público ----
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.lb.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.api.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+  annotations:
+    # Reutiliza la IP pública existente en Azure para no consumir el límite
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: {{ .Values.service.lb.azureResourceGroup }}
+    service.beta.kubernetes.io/azure-pip-name: {{ .Values.service.lb.azurePipName }}
+spec:
+  type: {{ .Values.service.lb.type }}
+  selector:
+    app: {{ .Values.api.name }}
+  ports:
+    - port: {{ .Values.service.lb.port }}
+      targetPort: {{ .Values.service.lb.targetPort }}
+      protocol: TCP
+---
+# ---- Service ClusterIP — SQL Server interno ----
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.sqlserver.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.sqlserver.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  type: {{ .Values.service.sqlserver.type }}
+  selector:
+    app: {{ .Values.sqlserver.name }}
+  ports:
+    - name: tds
+      port: {{ .Values.service.sqlserver.port }}
+      targetPort: {{ .Values.service.sqlserver.targetPort }}
+      protocol: TCP

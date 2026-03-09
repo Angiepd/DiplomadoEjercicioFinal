@@ -1,0 +1,80 @@
+# ============================================================
+# VALUES por defecto — ServiceDemo Helm Chart
+# Sobrescribe estos valores en el pipeline o con --set
+# ============================================================
+
+# ---- Namespace ----
+namespace: servicedemo
+
+# ---- API ----
+api:
+  name: servicedemo-api
+  replicaCount: 1
+  image:
+    registry: acrarquitecturamaestria.azurecr.io
+    repository: reposervicedemo
+    tag: latest
+    pullPolicy: Always
+  port: 8080
+  env:
+    aspnetcoreEnvironment: Development
+  resources: {}
+# ---- HPA ----
+hpa:
+  name: servicedemo-api-hpa
+  minReplicas: 1
+  maxReplicas: 3
+# ---- SQL Server (Azure SQL Edge) ----
+sqlserver:
+  name: servicedemo-sqlserver
+  replicaCount: 1
+  image:
+    repository: mcr.microsoft.com/azure-sql-edge
+    tag: latest
+    pullPolicy: IfNotPresent
+  port: 1433
+  acceptEula: "Y"
+  database: ServicedemoDB
+  persistence:
+    claimName: sql-data
+    mountPath: /var/opt/mssql
+  securityContext:
+    fsGroup: 10001
+    runAsUser: 0
+  resources: {}
+
+# ---- Secret ----
+secret:
+  name: servicedemo-secrets
+  # Valores en texto plano — Helm los codifica a base64 automáticamente
+  # CAMBIA ESTOS VALORES en producción o usa --set en el pipeline
+  saPassword: "DemoT2026!"
+  connectionString: "Server=sqlserver,1433;Database=ServicedemoDB;User Id=sa;Password=DemoT2026!;TrustServerCertificate=True;MultipleActiveResultSets=True"
+
+# ---- Services ----
+service:
+  # ClusterIP interno de la API
+  api:
+    name: servicedemo-api
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+
+  # LoadBalancer público
+  lb:
+    name: servicedemo-api-lb
+    type: LoadBalancer
+    port: 80
+    targetPort: 8080
+    # IP pública existente en Azure (evita crear una nueva)
+    azureResourceGroup: MC_miPrimerk8s-rg_MiPrimerAks-aks_centralus
+    azurePipName: d8db1f2b-1c22-4236-824c-d4a28c4a7c2b
+
+  # ClusterIP interno de SQL Server
+  sqlserver:
+    name: sqlserver
+    type: ClusterIP
+    port: 1433
+    targetPort: 1433
+    
+
