@@ -1,24 +1,24 @@
 
 # 🧱 Trabajo K8S – Trbajo final diplomado
 
-## 📝 Introducción  
+##  Introducción  
 Este proyecto consiste en el diseño y despliegue de un microservicio utilizando **Docker**, **Kubernetes**, **Helm**, **ArgoCD** y pipelines de **Azure DevOps**.  
 Su propósito es aplicar principios de arquitectura de software moderna, asegurando que las soluciones sean **escalables**, **mantenibles** y alineadas con los requisitos técnicos y del negocio.
 
 ---
 
-## 🎯 Objetivo  
+##  Objetivo  
 Diseñar y desplegar un microservicio contenedorizado en Kubernetes, empleando herramientas de orquestación, empaquetado y automatización.
 
 
-### 📌 Indicadores de desempeño  
+###  Indicadores de desempeño  
 - Diseño de arquitecturas de software utilizando estilos y patrones reconocidos.  
 - Creación de soluciones escalables y mantenibles.  
 - Implementación alineada con requisitos técnicos y del negocio.
 
 ---
 
-## 🧩 Alcance de la Actividad  
+##  Alcance de la Actividad  
 El trabajo incluye:
 
 - Construcción de un microservicio básico.  
@@ -29,7 +29,19 @@ El trabajo incluye:
 
 ---
 
-## 🛠️ Pasos del Proyecto
+## Estructura
+DiplomadoEjercicioFinal/
+ ├── servicedemo
+ ├── src
+ ├── test
+ ├── Dockerfile
+ ├── README.md
+ ├── ServiceDemo.slnx
+ ├── azure-pipelines.yaml
+ ├── docker-compose.yml
+ └── dotnet-tools.json
+
+## Pasos del Proyecto
 
 ### 1️⃣ Microservicio y Contenedores Docker  
 - Crear un microservicio básico (**lenguaje libre: Node.js / .NET / Python / etc.**)  
@@ -49,3 +61,5 @@ El trabajo incluye:
   - Service  
   - ConfigMaps / Secrets  
   - Ingress (si aplica)
+
+ 
